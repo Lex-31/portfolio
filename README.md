@@ -1,11 +1,12 @@
 # portfolio
-my portfolio
+my portfolio  
 
-Weather widget JS:
-https://lex-31.github.io/portfolio/weather/index.html
-- executed in JavaScript
-- OpenWeatherMap API
-- usage of modules JavaScript
+Weather widget JS:  
+https://lex-31.github.io/portfolio/weather/index.html  
+- executed in JavaScript  
+- OpenWeatherMap API  
+- usage of modules JavaScript  
+- search for a city by IP using the IpAPI service  
 
 Leasing:
 https://lex-31.github.io/portfolio/leasing/index.html - The slider is implemented using Swiper.
