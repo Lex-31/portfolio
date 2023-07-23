@@ -68,12 +68,12 @@ export const renderWidgetForecast = (widget, data) => {  //data - данные �
 
     const widgetDayItem = document.createElement('li'); //создаем li элемент
     widgetDayItem.className = 'widget__day-item'; //задаем ему класс
-
+    //вставляем данные в каждый li элемент дня недели
     widgetDayItem.insertAdjacentHTML('beforeend', `
       <p class="widget__day-text">${item.dayOfWeek}</p>
       <img class="widget__day-img" src="./icon/${item.weatherIcon}.svg" alt="Погода">
       <p class="widget__day-temp">${item.minTemp.toFixed(1)}°/${item.maxTemp.toFixed(1)}°</p>
-      `)
+      `);
     return widgetDayItem;
   });
 

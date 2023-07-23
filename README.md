@@ -16,6 +16,9 @@ https://lex-31.github.io/portfolio/leasing/contacts.html
 BATMAN:  
 https://lex-31.github.io/portfolio/batman/index.html - The slider is implemented using Swiper.  
 
+Wawe:  
+https://lex-31.github.io/portfolio/wawe/index.html - Landing page using MixItUp sorting and Slick slider.  
+
 AutoExpress:  
 https://lex-31.github.io/portfolio/autousa/index.html - Simple Landing page using Slick slider.  
 
