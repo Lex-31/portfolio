@@ -434,8 +434,8 @@ body {
   line-height: 40px;
   padding: 0 15px;
   cursor: pointer;
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
 }
 .menu__list-link:hover {
   background-color: #bde800;
@@ -472,6 +472,7 @@ body {
   font-size: 50px;
   line-height: 60px;
   font-weight: 800;
+  letter-spacing: 1.2px;
   width: 70%;
   margin-bottom: 30px;
 }
@@ -770,6 +771,7 @@ body {
   font-size: 34px;
   line-height: 44px;
   font-weight: 800;
+  letter-spacing: 1.2px;
   margin-bottom: 30px;
 }
 .program__title a {
@@ -822,9 +824,417 @@ body {
   background-color: #ffffff;
   z-index: 1;
 }
+.calculator__bmi p {
+  line-height: 28px;
+}
 .calculator__title {
   font-size: 34px;
   line-height: 44px;
   font-weight: 800;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
+  margin-bottom: 30px;
+}
+.calculator__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+
+.calc-bmi {
+  width: 60%;
+  margin-top: 20px;
+  padding-right: 10px;
+}
+.calc-bmi__tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 40px;
+}
+.calc-bmi__tab {
+  width: 50%;
+}
+.calc-bmi__radio {
+  display: none;
+}
+.calc-bmi__radio:checked + .calc-bmi__span {
+  background-color: #bde800;
+}
+.calc-bmi__radio:checked + .calc-bmi__span:hover {
+  background-color: #deff4b;
+}
+.calc-bmi__span {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  border: solid 1px #bde800;
+  text-align: center;
+  cursor: pointer;
+}
+.calc-bmi__span:hover {
+  background-color: #deff4b;
+}
+.calc-bmi__input {
+  font-size: 18px;
+  outline: none;
+  border: solid 1px #c7c7c7;
+  background-color: transparent;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 15px;
+  cursor: pointer;
+}
+.calc-bmi__input:active,
+.calc-bmi .calc-bmi__input:focus {
+  border-color: #999;
+}
+.calc-bmi__input::-webkit-input-placeholder {
+  color: #c7c7c7;
+  opacity: 1;
+}
+.calc-bmi__input::-moz-placeholder {
+  color: #c7c7c7;
+  opacity: 1;
+}
+.calc-bmi__input:-ms-input-placeholder {
+  color: #c7c7c7;
+  opacity: 1;
+}
+.calc-bmi__input::-ms-input-placeholder {
+  color: #c7c7c7;
+  opacity: 1;
+}
+.calc-bmi__input::placeholder {
+  color: #c7c7c7;
+  opacity: 1;
+}
+.calc-bmi__select {
+  font-size: 18px;
+  outline: none;
+  border: solid 1px #c7c7c7;
+  background-color: transparent;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 15px 35px 15px 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+}
+.calc-bmi__select::-ms-expand {
+  /* appearance for IE */
+  display: none;
+}
+.calc-bmi__options {
+  position: relative;
+}
+.calc-bmi__options::after {
+  content: "";
+  right: 8%;
+  top: 42%;
+  height: 12px;
+  width: 12px;
+  border-bottom: 2px solid #999;
+  border-right: 2px solid #999;
+  display: block;
+  margin-top: -4px;
+  pointer-events: none;
+  position: absolute;
+  -webkit-transform-origin: 66% 66%;
+  -ms-transform-origin: 66% 66%;
+  transform-origin: 66% 66%;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.calc-bmi__select:active,
+.calc-bmi .calc-bmi__select:focus {
+  border-color: #999;
+}
+.calc-bmi__btn {
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #ffffff;
+  width: 100%;
+  background-color: #000000;
+  border: none;
+  padding: 14px 40px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+}
+.calc-bmi__btn:hover {
+  background-color: #bde800;
+}
+
+.result {
+  width: 40%;
+  text-align: center;
+  border: 1px solid #f2f2f2;
+  padding: 120px 10px;
+  margin-top: 20px;
+}
+.result img {
+  display: inline;
+  margin-bottom: 20px;
+}
+.result p {
+  font-size: 16px;
+  line-height: 28px;
+  color: #c7c7c7;
+}
+
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.footer-title {
+  padding: 100px 0;
+  border-bottom: solid 1px #4c4c4c;
+  text-align: center;
+}
+.footer-title h3 {
+  font-size: 34px;
+  line-height: 44px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+.footer-title p {
+  font-size: 16px;
+  line-height: 28px;
+  width: 70%;
+  margin: 0 auto 30px;
+}
+.footer-title__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.footer-title__form input {
+  width: 320px;
+  margin-right: 40px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  background-color: #ffffff;
+  padding: 15px;
+  cursor: pointer;
+}
+.footer-title__form input::-webkit-input-placeholder {
+  color: #000000;
+  opacity: 0.6;
+}
+.footer-title__form input::-moz-placeholder {
+  color: #000000;
+  opacity: 0.6;
+}
+.footer-title__form input:-ms-input-placeholder {
+  color: #000000;
+  opacity: 0.6;
+}
+.footer-title__form input::-ms-input-placeholder {
+  color: #000000;
+  opacity: 0.6;
+}
+.footer-title__form input::placeholder {
+  color: #000000;
+  opacity: 0.6;
+}
+.footer-title__form button {
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #bde800;
+  border: solid 1px #bde800;
+  padding: 14px 40px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+}
+.footer-title__form button:hover {
+  background-color: #000000;
+}
+.footer-title__checkbox {
+  display: none;
+}
+.footer-title__span {
+  display: inline-block;
+  font-size: 15px;
+  width: 100%;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.footer-title__checkbox + .footer-title__span::before {
+  content: "✔";
+  border: 0.1em solid white;
+  border-radius: 4px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  vertical-align: sub;
+  color: transparent;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+}
+.footer-title__checkbox:checked + .footer-title__span::before {
+  border: none;
+  color: #bde800;
+  vertical-align: top;
+}
+
+.footer-menu {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr [3];
+  grid-template-columns: repeat(3, 1fr);
+  padding: 100px 0 65px;
+  border-bottom: solid 1px #4c4c4c;
+}
+.footer-menu__row-1 .logo {
+  margin-right: auto;
+  color: #ffffff;
+}
+.footer-menu__row-1 p {
+  line-height: 28px;
+  width: 80%;
+  padding: 35px 0;
+}
+
+.social-icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.social-icons a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-right: 20px;
+  -webkit-transition: border-color 0.3s;
+  transition: border-color 0.3s;
+  cursor: pointer;
+}
+.social-icons svg {
+  height: 18px;
+  width: 18px;
+}
+.social-icons svg path {
+  fill: #ffffff;
+  -webkit-transition: fill 0.3s;
+  transition: fill 0.3s;
+}
+.social-icons a:hover {
+  border-color: #bde800;
+}
+.social-icons a:hover path {
+  fill: #bde800;
+}
+
+.footer-menu__row-2 h5,
+.footer-menu__row-3 h5 {
+  font-size: 18px;
+  line-height: 28px;
+  color: #4c4c4c;
+  font-weight: 400;
+  margin-bottom: 35px;
+  text-transform: uppercase;
+}
+
+.footer-menu__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.footer-menu__list li {
+  display: block;
+  width: 50%;
+  margin-bottom: 35px;
+}
+.footer-menu__list a {
+  line-height: 28px;
+  color: #ffffff;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+.footer-menu__list a:hover {
+  color: #bde800;
+}
+
+.footer-menu__contacts {
+  line-height: 28px;
+}
+.footer-menu__contacts li {
+  line-height: 28px;
+  margin-bottom: 35px;
+}
+.footer-menu__contacts .address svg, .footer-menu__contacts .phone svg, .footer-menu__contacts .email svg {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #bde800;
+  margin-right: 20px;
+  padding: 5px;
+}
+
+.footer-rights {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 28px;
+  color: #4c4c4c;
+  padding: 40px 0;
+}
+.footer-rights__privacy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.footer-rights a {
+  margin-left: 40px;
+  cursor: pointer;
 }
