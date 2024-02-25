@@ -36,3 +36,6 @@ https://lex-31.github.io/portfolio/sup/index.html - Simple Landing page without 
 
 Iphone:  
 https://lex-31.github.io/portfolio/iphone/index.html - Simple Landing page.  
+
+Fitness:
+https://anna-fit.pro - Landing page with JavaScript and Swiper
