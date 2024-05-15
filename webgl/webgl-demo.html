@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://youtu.be/ms1_xM2JVc0 - WebGL и шейдеры – входим в курс дела! [GeekBrains] (https://github.com/radiostep/webgl_demo/blob/master/index.html) -->
+
+<head>
+    <title>WebGL Demo</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Скрипт фрагментного шедера -->
+    <script id="shader-fs" type="x-shader/x-fragment">
+
+        precision highp float;
+
+        const float PI = 3.14159265359;
+
+        uniform float uTime;
+        uniform vec2 uResolution;
+
+        float random(float p) {
+            return fract(sin(p) * 1000.0);
+        }
+
+        float noise(vec2 p) {
+            float t = uTime / 2000.0;
+
+            if (t > 1.0)
+                t -= floor(t);
+
+            return random(p.x * 14.0 + p.y * sin(t) * 0.05);
+        }
+
+        vec2 sw(vec2 p) {
+            return vec2(floor(p.x), floor(p.y));
+        }
+        vec2 se(vec2 p) {
+            return vec2(ceil(p.x), floor(p.y));
+        }
+        vec2 nw(vec2 p) {
+            return vec2(floor(p.x), ceil(p.y));
+        }
+        vec2 ne(vec2 p) {
+            return vec2(ceil(p.x), ceil(p.y));
+        }
+
+        float smoothNoise(vec2 p){
+
+            vec2 inter = smoothstep(0.0, 1.0, fract(p));
+
+            float s = mix(noise(sw(p)), noise(se(p)), inter.x);
+            float n = mix(noise(nw(p)), noise(ne(p)), inter.x);
+
+            return mix(s, n, inter.y);
+        }
+
+        mat2 rotate(in float theta) {
+            float c = cos(theta);
+            float s = sin(theta);
+            return mat2(c, -s, s, c);
+        }
+
+        float circ(vec2 p) {
+            float r = length(p);
+            r = log(sqrt(r));
+            return abs(mod(4.0 * r, PI * 2.0) - PI);
+        }
+
+        void main() {
+
+            vec2 p = gl_FragCoord.xy / uResolution.xy;
+
+            p.x *= uResolution.x / uResolution.y;
+                        
+            float rz = 1.0;
+
+            p /= exp(mod(uTime * 0.15, PI));
+
+            rz *= abs(circ(p));
+
+            vec3 col = vec3(0.2, 0.1, 0.643) / rz;
+
+            gl_FragColor = vec4(col, 1.0);
+
+        }
+
+        </script>
+    <!-- Скрипт вершинного шедера -->
+    <script id="shader-vs" type="x-shader/x-vertex">
+        attribute vec3 aVertexPosition;
+        
+        void main() {
+
+            gl_Position = vec4(aVertexPosition, 1.0);
+
+        }
+
+        </script>
+
+    <script>
+
+        var canvas, gl; //canvas - глобальная переменная; gl - контекст 3D графики
+
+        var vertexPositionLocation;
+
+        var resolutionLocation, resolution;
+        var timeLocation, time;
+        var startTime;
+
+        var vertices = [ //в OpenGL вершины хранятся в порядке колонок
+            -1.0, -1.0,
+            1.0, -1.0,
+            -1.0, 1.0,
+
+            -1.0, 1.0,
+            1.0, -1.0,
+            1.0, 1.0
+        ];
+
+        function resize() {  //функция изменения размеров окна
+            // canvas.width = canvas.offsetWidth; //offsetWidth - возвращает ширину элеменета. Меняем размеры холста на актуальные текущие
+            // canvas.height = canvas.offsetHeight; //offsetHeight - возвращает ширину элеменета.
+
+            var positionInfo = canvas.getBoundingClientRect(); //чтобы в Firefox небыло проблем
+            canvas.width = positionInfo.height;
+            canvas.height = positionInfo.width;
+
+            gl.viewport(0, 0, canvas.width, canvas.height); //говорим WebGL чтобы он поменял свои размеры холста. "0, 0," - начало координат, нижний левый угол; canvas.width, canvas.height - ширина и высота
+        }
+
+        function compileShader(shaderSource, shaderType) { //функция компиляции шедера, аргументы - исходный текст шедера и тип шедера. Строки кода содержащие "gl" - относятся к ВидеоКарте
+            var shader = gl.createShader(shaderType);  //создаем шедер на ВидеоКарте и выделяем под него память
+            gl.shaderSource(shader, shaderSource); //теперь в эту память надо закачать исходник
+            gl.compileShader(shader);  //как только исходник закачан, можем компилировать
+            return shader; //затем возвращаем его назад
+        }
+
+        function getShader(id) { //Функция которая из JS прочтет скрипты и передаст на ВидеоКарту
+            var shaderScript = document.getElementById(id); //получаем скрипт по id
+
+            var shaderSource = "";  //инициализируем переменную с исходником шедера
+            var textLine = shaderScript.firstChild; //считываем первый дочерний элемент исходника скрипта шедера
+            while (textLine) {  //построчно пройдем по содержимому скриптов шедеров и считаем все строки скрипта шедера
+                if (textLine.nodeType == 3) { //проверяем что это именно текстовая строка (3 - TEXT_NODE) а не чтото иное
+                    shaderSource += textLine.textContent; //делаем конкатенацию текста скрипта за вычетом всех тегов
+                }
+                textLine = textLine.nextSibling; //nextSibling используется только для чтения и возвращает узел, непосредственно следующий за данным узлом в списке  childNodes. Когда строки скипта закончатся, то здесь будет пустое значение и цикл прервется
+            }
+
+            //компиляция шедера
+            var shader;
+            if (shaderScript.type == "x-shader/x-fragment") { //если это фрагментный шедер...
+                shader = compileShader(shaderSource, gl.FRAGMENT_SHADER); //компилируем шедер
+            } else if (shaderScript.type == "x-shader/x-vertex") { //если это вершинный шедер...
+                shader = compileShader(shaderSource, gl.VERTEX_SHADER); //компилируем шедер
+            } else { //если это непонятно что...
+                return null;
+            }
+            return shader; //и возвращаем скомпилированный шедер
+        }
+
+        function drawScene() { //функция рисования сцены
+
+            gl.uniform1f(timeLocation, time);
+            gl.uniform2fv(resolutionLocation, resolution);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6); //сообщаем OpenGL чтобы нарисовал все наши треугольники и сообщаем кол-во. gl.TRIANGLES - Рисовать будем массивы, в массивах у нас треугольники; 0 - начальный номер; 6 - кол-во вершин
+        }
+
+        function render() { //функция где будем рисовать сцену
+            requestAnimationFrame(render);  //создадим петлю отрисовки, requestAnimationFrame - высокоэффектинвый таймер который работает с частотой гдето 60-кадров в сек, который не тратит ресурсы если переключились на другую вкладку. Функция аналог - settimeout(1000/60) - работает всегда, даже если переключились на др вкладку
+
+            resolution = [canvas.width, canvas.height];
+
+            time = (Date.now() - startTime) / 1000;
+
+            drawScene(); //рисуем сцену
+        }
+
+        function bootstrap() { //функция с которой начинается выполнение программы
+            canvas = document.getElementById("holder"); //создаем холст canvas
+
+            gl = canvas.getContext("experimental-webgl");  //в переменную gl получаем контекст WebGL (OpenGL ES 2.0)
+
+            resize(); //функция изменения размеров окна - вызывается при загрузке и при изменении размеров
+
+            window.addEventListener("resize", resize); //обработчик собитий окошка, вызывающийся при изменении размеров страницы
+
+            var fragmentShader = getShader("shader-fs"); //создаем фрагментный шейдер 
+            var vertexShader = getShader("shader-vs"); //создаем вершинный шейдер
+
+            //Чтобы шедеры работали их надо объеденить в программу
+            var shaderProgram = gl.createProgram(); //создаем новую программу в конвеере на ВидеоКарте
+            gl.attachShader(shaderProgram, vertexShader); //затем в эту программу закидываем новые скомпилированные шедеры. Атрибуты указываем какая программа и какой шедер будем присоединять
+            gl.attachShader(shaderProgram, fragmentShader); //сначала вершинный шедер, а затем фрагментный
+            gl.linkProgram(shaderProgram); //когда в программу закачаны 2 шедера, надо связать и завершить процесс подготовки кода для ВидеоКарты
+            gl.useProgram(shaderProgram); //программа готова для отрисовки, шедеры помещены на свои места в конвейере
+
+            gl.deleteShader(fragmentShader); //удаляем исходные шедеры чтобы освободить память
+            gl.deleteShader(vertexShader);
+
+            resolutionLocation = gl.getUniformLocation(shaderProgram, "uResolution");
+            timeLocation = gl.getUniformLocation(shaderProgram, "uTime");
+
+            //теперь делаем мост, передачу координат вершин треугольников на ВидоКарту:
+            vertexPositionLocation = gl.getAttribLocation(shaderProgram, "aVertexPosition"); //получаем физическое место на ВидеоКарте, В качестве атрибутов указываем программу шедерную относительно которой ищем; и имя переменной или атрибут в шедере - который отвечает за эти позиции. После выполнении этой строчки кода, у нас есть место положения атрибута в памяти ВидеоКарты
+            var buffer = gl.createBuffer(); //чтобы менять какие нибудь атрибуты в ВидеоКарте, используем буфер-массив
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer); //делаем его текущим, указываем что это буфер в виде массива
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);  //записываем туда данные. Указываем что данные пишутся туда как массив. new Float32Array() - создаем специализированный массив с плавающей точкой 32-битный, и передаем туда vertices - позиции наших треугольников и способ рисования - gl.STATIC_DRAW (поскольку позиции не будут менятся со временем указываем Статичное рисование, это ускоряет процесс отрисовки)
+            gl.enableVertexAttribArray(vertexPositionLocation); //включаем эти атрибуты в шедере
+            gl.vertexAttribPointer(vertexPositionLocation, 2, gl.FLOAT, false, 0, 0); //указываем параметры буфера, сколько читать от туда и т.д. vertexPositionLocation - позиция в программе шедера; 2 - сколько координат считать; gl.FLOAT - в каком типе переданы координаты
+
+            startTime = Date.now();
+
+            render(); //метод запуска рисовалки
+
+        }
+
+    </script>
+
+    <style>
+        body {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        canvas {
+            position: relative;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<body onload="bootstrap();">
+    <!-- Рисование WebGL будет производиться на холсте canvas: -->
+    <canvas id="holder"></canvas>
+</body>
+
+</html>
