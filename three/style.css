@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#cube {
+  position: relative;
+  width: 900px;
+  height: 800px;
+  border: solid grey 5px;
+}
+
+#assembly {
+  position: relative;
+  width: 80%;
+}
+
+#assembly canvas {
+  border: solid green 5px;
+}
+
+#gltf {
+  width: 50%;
+}
+
+#gltf canvas {
+  border: solid blue 5px;
+}
+
+.controls {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.controls button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+
+.controls button.active {
+  background-color: green;
+}
