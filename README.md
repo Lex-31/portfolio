@@ -7,6 +7,7 @@
 - OpenWeatherMap API  
 - usage of modules JavaScript  
 - search for a city by IP using the IpAPI service  
+<a href="http://www.google.co.uk" target="_blank">Google</a>  
 
 ### Brain Bards for learning foreign languages:  
 [https://lex-31.github.io/portfolio/braincards/index.html](https://lex-31.github.io/portfolio/braincards/index.html "Brain Bards for learning foreign languages"){target="_blank"}  
