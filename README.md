@@ -8,6 +8,11 @@ https://lex-31.github.io/portfolio/weather/index.html
 - usage of modules JavaScript  
 - search for a city by IP using the IpAPI service  
 
+Brain Bards for learning foreign languages:  
+https://.../index.html  
+- executed in JavaScript  
+- usage of modules JavaScript  
+
 Leasing:  
 https://lex-31.github.io/portfolio/leasing/index.html - The slider is implemented using Swiper.  
 https://lex-31.github.io/portfolio/leasing/new-cars.html - The filter is executed using JavaScript.  
