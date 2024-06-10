@@ -144,14 +144,14 @@ let mouseX = 0;
 let mouseY = 0;
 
 // Добавляем обработчики событий мыши для перемещения сцены
-element.addEventListener('mousedown', (event) => { // происходит, когда пользователь нажимает любую кнопку мыши
+element.addEventListener('pointerdown', (event) => { // происходит, когда пользователь нажимает любую кнопку мыши
   if (event.button === 0) { // левая кнопка мыши
     isMouseDown = true;
     mouseX = event.clientX; // возвращает горизонтальную координату курсора мыши относительно левого верхнего угла окна браузера
     mouseY = event.clientY; // возвращает вертикальную координату курсора мыши относительно левого верхнего угла окна браузера
   }
 });
-element.addEventListener('mousemove', (event) => {
+element.addEventListener('pointermove', (event) => {
   if (isMouseDown) {
     if (mode === 'rotate') { // вращаем сцену
       const deltaX = event.clientX - mouseX;
@@ -172,7 +172,7 @@ element.addEventListener('mousemove', (event) => {
     }
   }
 });
-element.addEventListener('mouseup', (event) => { // происходит, когда пользователь отпускает кнопку мыши
+element.addEventListener('pointerup', (event) => { // происходит, когда пользователь отпускает кнопку мыши
   if (event.button === 0) { // левая кнопка мыши
     isMouseDown = false;
   }

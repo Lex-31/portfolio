@@ -1,6 +1,12 @@
 # portfolio  
 ## my portfolio  
 
+### Three.js start:
+[https://portfolio-threejs-lex31s-projects.vercel.app](https://portfolio-threejs-lex31s-projects.vercel.app "Three.js run")  
+[https://github.com/Lex-31/portfolio/tree/main/three](https://github.com/Lex-31/portfolio/tree/main/three "Three.js code")  
+- 3D Cube from the manual  
+- Geometric 3D shapes with the ability to control movement and unmounting  
+
 ### Weather widget JS:  
 [https://lex-31.github.io/portfolio/weather/index.html](https://lex-31.github.io/portfolio/weather/index.html "Weather widget JS")  
 - executed in JavaScript  
