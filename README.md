@@ -20,7 +20,7 @@
 - usage of modules JavaScript  
 
 ### Fitness:  
-[https://lex-31.github.io/dmi/index.html](https://anna-fit.pro "anna-fit.pro") - Landing page with JavaScript and Swiper.  
+[https://lex-31.github.io/dmi/index.html](https://anna-fit.ru "anna-fit.ru") - Landing page with JavaScript and Swiper.  
 
 ### Leasing:  
 [https://lex-31.github.io/portfolio/leasing/index.html](https://lex-31.github.io/portfolio/leasing/index.html "Leasing slider")  - The slider is implemented using Swiper.  
